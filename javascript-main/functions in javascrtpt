@@ -1,0 +1,40 @@
+/* Normal funcction
+function sum(x,y)
+{
+    sumi = x+y;
+    return sumi;
+}
+
+let val = sum(3,4);
+console.log(val);
+*/
+
+// Arrow fucntion
+//direct assignment of value onto a variable
+
+/*//with arguements
+const x = (a,b)=>{
+    console.log(a+b);
+}
+
+//without arguements
+const print_function = () =>{
+    console.log("Akshaya");
+    }
+    */
+
+//task
+//     function no_of_vowels(str){
+//         let county = 0;
+//         for(const ch of str){
+//             if(ch == 'a' || ch == 'e' ||ch == 'i' ||ch == 'o' ||ch == 'u')
+//             {
+//               county+=1;
+//             }
+//         }
+//       console.log(county);
+//     }
+// let string  = "spiderman's real name is peter parker";
+// no_of_vowels(string);
+
+

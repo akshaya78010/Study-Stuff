@@ -1,0 +1,112 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+   int data;
+   Node *next;
+
+   Node(int value){
+      data = value;
+      next = NULL;
+   }
+};
+
+void print_ll(Node *head)
+{
+   Node *temp = head;
+   while(temp != NULL)
+   {
+      cout<<temp->data<<" ";
+      temp = temp->next;
+   }
+   cout<<'\n';
+}
+
+void insert_at_pos(Node *head,int val,int pos){
+ 
+  int county = 1;
+
+   Node *temp = head;
+  while(county != pos - 1){
+   temp = temp->next;
+   county += 1;
+  }
+
+  Node *first = temp;
+  Node *newNode = new Node(val);
+  Node *third = temp->next;
+
+  first->next = newNode;
+  newNode->next = third;
+}
+
+void del_at_pos(Node *head,int position){
+ int counter = 1;
+   
+   if(position == 1){
+      head = head->next;
+   }
+   else
+   {
+      Node *temp1 = head;
+      while(counter != position - 1){
+         temp1 = temp1->next;
+         counter+=1;
+      }
+
+      Node *temp3 = temp1->next->next;
+
+      temp1->next = NULL;
+      temp1->next = temp3;
+   }
+}
+
+int main()
+{
+  int n;
+  // cout<<"Enter the size of linkedlist: ";
+  cin>>n;
+  // cout<<'\n';
+
+
+   Node *head = new Node(0);
+   Node *temp = head;
+
+
+  for(int i =0; i < n ; i++)
+  {
+   int new_val;
+   // cout<<"enter the node"<<i<<": ";
+   cin>>new_val;
+   
+   Node *newnode = new Node(new_val);
+   temp->next = newnode;
+   temp = temp->next;
+  }
+
+
+head = head->next;
+  print_ll(head);
+
+//insert at pos
+  int val;
+   cin>>val;
+   cout<<val<<'\n';
+
+   int pos;
+   cin>>pos;
+   cout<<pos<<'\n';
+   insert_at_pos(head,val,pos);
+
+  print_ll(head);
+
+  //del at pos
+
+  int position;
+  cin>>position;
+del_at_pos(head,position);
+ 
+
+   print_ll(head);
+}

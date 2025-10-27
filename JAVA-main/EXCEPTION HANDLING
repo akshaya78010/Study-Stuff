@@ -1,0 +1,224 @@
+import java.util.Scanner;
+
+//one of the features in java ->robust
+// exception handling
+//every exception in java is nothing but a class
+/*----------------------------------------------------------------------------------------------------------------------------------------------
+public class ExceptionHandling {
+    public static <ArthimeticException> void main(String[] args){
+    Scanner sc =new Scanner(System.in);
+int n = sc.nextInt();
+int m = sc.nextInt();
+try{
+        System.out.println(n/m);
+    }
+catch(ArthimeticException e){
+        System.out.println("you cannot divide 0");
+    }
+   System.out.println("i will be printed");
+}
+}
+*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------
+public class ExceptionHandling {
+    public static void main(String[] args) {
+        String str = "1asdfghj23";
+        try {
+            System.out.println(Integer.parseInt(str));
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+        }
+        System.out.println("i will be printed");
+    }}*/
+/*-------------------------------------------------------------------------------------------------------------------------------------------
+public class ExceptionHandling {
+    public static void main(String[] args) {
+       int[] arr = {1,3,4};
+        try {
+            System.out.println(arr[3]);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+        }
+        System.out.println("i will be printed");}}*/
+/*-----------------------------------------------------------------------------------------------------------------------------------------
+public class kitty{
+    String name;
+    public kitty(){}
+    public kitty(String name){
+        this.name = name;
+    }
+}
+public class ExceptionHandling{
+    public static void main(String[] args)
+    {
+        Kitty k1 = new Kitty();
+        try{
+        System.out.println(k1.name.toUpperCase());
+    }
+        catch(NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+        }
+}*/
+/*TRY WITH MULTI CATCH
+->In java it's possible to associate
+ USE OF THROWS KEY WORD
+ ->throws keyword is used with the methods to pass on the exception to the call in function
+ to handle it, instead of handling it in the method itself
+ */
+/*--------------------------------------------------------------------------------------------------------------------------------------
+public class ExceptionHandling {
+    public static void main(String[] args)
+    {
+        int[] arr= {10,20,30,40,50,60};
+        Scanner sc = new Scanner(System.in);
+        int index = sc.nextInt();
+        int value = sc.nextInt();
+        try{
+            System.out.println(arr[index]/value);
+        }
+//        catch(ArithmeticException e){
+//            System.out.println(e);
+//        }
+//        catch (IndexOutOfBoundsException e){
+//            System.out.println(e);
+//        }
+        catch(ArithmeticException | IndexOutOfBoundsException e){
+            System.out.println(e);
+       }
+
+        System.out.println("finish");
+    }
+}
+*/
+/*
+---------------------------------------------------------------------------------------------------------------------------------------
+class MyMath{
+    public void divide(int a , int b) throws ArithmeticException
+    {
+//        try {
+//            System.out.println(a / b);
+//        }
+//        catch(ArithmeticException e)
+//        {
+//            System.out.println(e);
+//        }
+        System.out.println(a / b);
+    }
+}
+public class ExceptionHandling {
+    public static void main(String[] args) {
+        MyMath m1 = new MyMath();
+        MyMath m2 = new MyMath();
+        try {
+            m1.divide(20, 0);
+        }
+        catch(ArithmeticException e)
+        {
+            System.out.println(e);
+        }
+        try{
+            m2.divide(10,0);
+        }
+        catch(ArithmeticException e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+}
+*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------
+USE FO THROW KEYWORD:-
+->throw keyword is used to throw exceptions explicitly, and corresponding catch block should handle it.
+->an exception class is the parent class you can write like this.
+
+throw
+EVERY EXCEPTION YOU SEE IN JAVA ARE THE DIRECT DESCENDANTS OF AN EXCEPTION OR A RUNTIME EXCEPTION CLASS
+1.)EXCEPTION CLASS
+2.)RUNTIME EXCEPTION CLASS(unchecked exceptions)
+impQUE)->difference between checked exceptions and unchecked exceptions
+ANS)-->compile-time-exceptions, checked exceptions must be handled or else the code will not even compile
+ */
+/*
+public class Main()
+{
+    public static void validateAge(int age) throws RuntimeException{
+        if(age < 18){
+             throw new RuntimeException ("You cannot vote");
+        }
+        else {
+            System.out.println("you can vote");
+        }
+}
+public static class ExceptionHandling{
+        public static void main(String[] args)
+    {
+        Scanner sc=  new Scanner(System.in);
+        int n = sc.nextInt();
+        validateAge(17);
+    }
+}
+}
+*/
+/*
+----------------------------------------------------------------------------------------------------------------------------------------------------
+CUSTOM EXCEPTIONS:
+1.inorder ro create a custom exception.
+1. create a class.
+2.to make the class extend either the :
+->Exception class or the (root class for all the exceptions)
+->RuntimeException class(root for all runtime exceptions)
+3.when you extend directly from the Exception class you are creating CHECKED EXCEPTIONS(has to handled in the program as they are checked during the runtime).
+4.when you extend RuntimeException class you are creating  a UNCHECKED EXCEPTION (for safe execution of program you also have to handle them ,but not handling them won't result in compile time error).
+ */
+//ability to be used with throw keyword
+/*
+ class  tooYoung extends RuntimeException{
+    public tooYoung() {
+        super();
+    }
+    public tooYoung(String msg)
+    {
+        super(msg);
+    }
+}
+
+class tooOld extends RuntimeException{
+//default constructor
+    public tooOld() {
+        super();
+    }
+    public tooOld(String msg)
+    {
+        super(msg);
+    }
+}
+public class ExceptionHandling {
+public static void  checkeligibility(int age) throws tooYoung
+{
+    if(age  < 18)
+    {
+        throw new tooYoung("you are too young to get your life ruined");
+    }
+    else {
+        throw new tooOld("Rip");
+    }
+}
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int age = sc.nextInt();
+        try {
+            checkeligibility(age);
+        }
+        catch(tooYoung e)
+        {
+            System.out.println(e.getMessage());
+        }
+        catch (tooOld e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+*/

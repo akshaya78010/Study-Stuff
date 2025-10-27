@@ -1,0 +1,23 @@
+/*
+FOR  A % B  IKKADA MOD(A,B)
+DISTINCT GURTHUPETTUKO
+
+NATASHA USES CAP'S POWERS FREQUENTLY
+
+Mnemonic:
+"Deadpool Fights Ironman Over Alien Gates."
+
+D → Distinct
+F → Fetch First
+I → In / Not In
+O → Order By
+A → Aggregate Functions (Max(), Min(), Sum())
+G → Group By
+
+WITH cte AS
+(SELECT player_id, TO_CHAR(event_date, 'YYYY-MM-DD') AS first_login,
+ROW_NUMBER() OVER(PARTITION BY player_id ORDER BY event_date) AS rank
+FROM Activity)
+SELECT player_id,first_login 
+FROM cte
+WHERE rank < 2;

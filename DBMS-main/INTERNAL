@@ -1,0 +1,406 @@
+-- 1. DDL Commands (Data Definition Language) - Defines database structures
+
+-- a. CREATE TABLE - Creates a new table
+CREATE TABLE Students (
+    ID NUMBER PRIMARY KEY, -- Unique identifier for each student
+    Name VARCHAR2(100), -- Stores student name
+    Age NUMBER, -- Stores student age
+    math NUMBER, -- Marks for Mathematics
+    phy NUMBER, -- Marks for Physics
+    che NUMBER, -- Marks for Chemistry
+    cs NUMBER, -- Marks for Computer Science
+    es NUMBER, -- Marks for Environmental Science
+    eng NUMBER -- Marks for English
+);
+
+-- b. ALTER TABLE - Modifies an existing table
+-- i. ALTER + ADD - Adds a new column
+ALTER TABLE Students ADD Email VARCHAR2(255);
+
+-- ii. ALTER + MODIFY - Changes the datatype of an existing column
+ALTER TABLE Students MODIFY Name VARCHAR2(150);
+
+-- iii. ALTER + DROP - Removes a column from the table
+ALTER TABLE Students DROP COLUMN Email;
+
+-- c. RENAME TABLE - Changes the name of a table
+ALTER TABLE Students RENAME TO StudentRecords;
+
+-- d. DROP TABLE - Deletes a table permanently
+DROP TABLE StudentRecords;
+
+-- e. TRUNCATE TABLE - Removes all records but keeps table structure
+TRUNCATE TABLE Students;
+
+-- 2. DML (Data Manipulation Language) / DQL (Data Query Language) - Modifies and retrieves data
+
+-- a. INSERT - Adds new records
+INSERT INTO Students VALUES (1, 'John Doe', 20, 85, 90, 78, 88, 92, 80);
+INSERT INTO Students VALUES (2, 'Alice', 22, 75, 85, 88, 92, 79, 81);
+INSERT INTO Students VALUES (3, 'Bob', 21, 90, 87, 85, 91, 84, 82);
+
+-- b. UPDATE - Modifies existing records
+UPDATE Students SET Age = 23 WHERE ID = 2;
+UPDATE Students SET Name = 'Charlie' WHERE ID = 3;
+UPDATE Students SET Age = 19 WHERE Name = 'John Doe';
+
+-- c. DELETE - Removes records from a table
+DELETE FROM Students WHERE ID = 1;
+DELETE FROM Students WHERE Age > 22;
+DELETE FROM Students WHERE Name = 'Alice';
+
+-- d. SELECT - Retrieves records
+SELECT * FROM Students;
+SELECT Name FROM Students WHERE Age > 20;
+SELECT COUNT(*) FROM Students;
+
+-- 3. Constraints - Rules applied to table columns
+-- a. NOT NULL - Ensures column cannot have NULL values
+CREATE TABLE Employee (
+    EmpID NUMBER PRIMARY KEY,
+    Name VARCHAR2(100) NOT NULL
+);
+
+-- b. UNIQUE - Ensures all values in a column are unique
+CREATE TABLE Users (
+    UserID NUMBER PRIMARY KEY,
+    Email VARCHAR2(255) UNIQUE
+);
+
+-- c. CHECK - Restricts values based on a condition
+CREATE TABLE Orders (
+    OrderID NUMBER PRIMARY KEY,
+    Quantity NUMBER CHECK (Quantity > 0)
+);
+
+-- d. DEFAULT - Assigns a default value if no value is provided
+CREATE TABLE Customers (
+    CustID NUMBER PRIMARY KEY,
+    Country VARCHAR2(50) DEFAULT 'India'
+);
+
+-- 4. Primary & Foreign Key - Ensures relationships between tables
+CREATE TABLE Departments (
+    DeptID NUMBER PRIMARY KEY,
+    DeptName VARCHAR2(100)
+);
+
+CREATE TABLE Employees (
+    EmpID NUMBER PRIMARY KEY,
+    EmpName VARCHAR2(100),
+    DeptID NUMBER,
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+
+-- 5. SET Operators - Combines results of multiple SELECT queries
+SELECT Name FROM Students UNION SELECT EmpName FROM Employees;
+SELECT Name FROM Students UNION ALL SELECT EmpName FROM Employees;
+SELECT Name FROM Students INTERSECT SELECT EmpName FROM Employees;
+SELECT Name FROM Students MINUS SELECT EmpName FROM Employees;
+
+-- 6. Subqueries - Queries inside another query
+SELECT Name, (SELECT COUNT(*) FROM Students) AS TotalStudents FROM DUAL;
+SELECT Name FROM Students WHERE Age IN (SELECT Age FROM Students WHERE Age > 20);
+
+-- 7. Correlated Subquery - Uses an outer query reference inside a subquery
+SELECT Name FROM Students S WHERE Age = (SELECT MAX(Age) FROM Students WHERE ID = S.ID);
+
+-- 8. FOREIGN KEY with ON DELETE - Defines actions when referenced data is deleted
+CREATE TABLE Child (
+    ID NUMBER PRIMARY KEY,
+    ParentID NUMBER,
+    FOREIGN KEY (ParentID) REFERENCES Students(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Child2 (
+    ID NUMBER PRIMARY KEY,
+    ParentID NUMBER,
+    FOREIGN KEY (ParentID) REFERENCES Students(ID) ON DELETE SET NULL
+);
+
+-- 9. Ranking Query - Assigns rank to students based on total marks
+SELECT Name FROM (
+    SELECT Name, RANK() OVER (ORDER BY (math + phy + che + cs + es + eng) DESC) AS Rank
+    FROM Students
+) WHERE Rank = 4;
+
+-- 10. Joins - Combines records from multiple tables
+SELECT Students.Name, Employees.EmpName 
+FROM Students 
+INNER JOIN Employees ON Students.ID = Employees.EmpID;
+
+SELECT Students.Name, Employees.EmpName 
+FROM Students 
+LEFT JOIN Employees ON Students.ID = Employees.EmpID;
+
+SELECT Students.Name, Employees.EmpName 
+FROM Students 
+RIGHT JOIN Employees ON Students.ID = Employees.EmpID;
+
+SELECT Students.Name, Employees.EmpName 
+FROM Students 
+FULL OUTER JOIN Employees ON Students.ID = Employees.EmpID;
+
+-- 11. Aggregate Functions - Performs calculations on multiple rows
+SELECT COUNT(*) AS TotalStudents FROM Students;
+SELECT AVG(Age) AS AverageAge FROM Students;
+SELECT MAX(Age) AS OldestStudent FROM Students;
+SELECT MIN(Age) AS YoungestStudent FROM Students;
+SELECT SUM(Age) AS TotalAge FROM Students;
+
+-- 12. GROUP BY and HAVING - Groups data and filters aggregated results
+SELECT Age, COUNT(*) AS CountPerAge 
+FROM Students 
+GROUP BY Age 
+HAVING COUNT(*) > 1;
+
+-- 13. Indexing - Improves query performance
+CREATE INDEX idx_students_name ON Students(Name);
+
+-- 14. Views - Creates a virtual table
+CREATE VIEW StudentView AS 
+SELECT ID, Name, Age FROM Students;
+
+-- 15. Stored Procedure - Predefined SQL logic execution using a cursor
+CREATE OR REPLACE PROCEDURE GetAllStudents 
+AS 
+    CURSOR student_cursor IS SELECT * FROM Students;
+    student_rec student_cursor%ROWTYPE;
+BEGIN
+    OPEN student_cursor;
+    LOOP
+        FETCH student_cursor INTO student_rec;
+        EXIT WHEN student_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(student_rec.ID || ' - ' || student_rec.Name || ' - ' || student_rec.Age);
+    END LOOP;
+    CLOSE student_cursor;
+END GetAllStudents;
+/
+
+EXEC GetAllStudents;
+
+-- 16. Triggers - Executes automatically before or after changes to the database
+CREATE OR REPLACE TRIGGER BeforeInsertStudent 
+BEFORE INSERT ON Students 
+FOR EACH ROW 
+BEGIN
+    IF :NEW.Age < 18 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Age must be at least 18');
+    END IF;
+END;
+/
+
+-- 17. Transactions - Manages database changes
+SAVEPOINT before_update;
+UPDATE Students SET Age = 25 WHERE ID = 2;
+ROLLBACK TO before_update;
+
+UPDATE Students SET Age = 26 WHERE ID = 2;
+COMMIT;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- 13. String Functions
+-- a. CONCAT()
+SELECT CONCAT('Hello', ' World');
+SELECT CONCAT(first_name, last_name) FROM students;
+
+-- b. UPPER()
+SELECT UPPER('hello');
+SELECT UPPER(name) FROM students;
+
+-- c. LENGTH()
+SELECT LENGTH('Hello');
+SELECT LENGTH(name) FROM students;
+
+-- d. LTRIM()
+SELECT LTRIM('   Hello');
+SELECT LTRIM(name) FROM students;
+
+-- e. REPLACE()
+SELECT REPLACE('Hello World', 'World', 'SQL');
+SELECT REPLACE(name, 'a', 'A') FROM students;
+
+-- f. SUBSTR()
+SELECT SUBSTR('Hello World', 1, 5);
+SELECT SUBSTR(name, 2, 3) FROM students;
+
+-- 14. More String Functions
+-- a. INITCAP()
+SELECT INITCAP('hello world');
+SELECT INITCAP(name) FROM students;
+
+-- b. RTRIM()
+SELECT RTRIM('Hello   ');
+SELECT RTRIM(name) FROM students;
+
+-- c. REVERSE()
+SELECT REVERSE('Hello');
+SELECT REVERSE(name) FROM students;
+
+-- d. INSTR()
+SELECT INSTR('Hello World', 'o');
+SELECT INSTR(name, 'a') FROM students;
+
+-- e. LPAD()
+SELECT LPAD('Hello', 10, '*');
+SELECT LPAD(name, 10, '0') FROM students;
+
+-- f. LOWER()
+SELECT LOWER('HELLO');
+SELECT LOWER(name) FROM students;
+
+-- 15. Numeric Functions
+-- a. ABS()
+SELECT ABS(-10);
+SELECT ABS(score) FROM students;
+
+-- b. CEIL() and FLOOR()
+SELECT CEIL(4.3), FLOOR(4.7);
+SELECT CEIL(marks), FLOOR(marks) FROM students;
+
+-- c. MOD()
+SELECT MOD(10, 3);
+SELECT MOD(score, 5) FROM students;
+
+-- d. POWER()
+SELECT POWER(2, 3);
+SELECT POWER(marks, 2) FROM students;
+
+-- e. ROUND()
+SELECT ROUND(12.345, 2);
+SELECT ROUND(percentage, 1) FROM students;
+
+-- f. TRUNCATE()
+SELECT TRUNCATE(12.3456, 2);
+SELECT TRUNCATE(average, 1) FROM students;
+
+-- g. SQRT()
+SELECT SQRT(25);
+SELECT SQRT(marks) FROM students;
+
+-- 16. Date Functions
+-- a. EXTRACT()
+SELECT EXTRACT(YEAR FROM SYSDATE);
+SELECT EXTRACT(MONTH FROM dob) FROM students;
+
+-- b. ADD_MONTHS()
+SELECT ADD_MONTHS(SYSDATE, 6);
+SELECT ADD_MONTHS(dob, 12) FROM students;
+
+-- c. LAST_DAY()
+SELECT LAST_DAY(SYSDATE);
+SELECT LAST_DAY(dob) FROM students;
+
+-- 17. More Date Functions
+-- a. MONTHS_BETWEEN()
+SELECT MONTHS_BETWEEN(SYSDATE, TO_DATE('2024-01-01', 'YYYY-MM-DD'));
+SELECT MONTHS_BETWEEN(graduation_date, dob) FROM students;
+
+-- b. TO_CHAR()
+SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY');
+SELECT TO_CHAR(dob, 'YYYY-MM-DD') FROM students;
+
+-- c. NEXT_DAY()
+SELECT NEXT_DAY(SYSDATE, 'Monday');
+SELECT NEXT_DAY(exam_date, 'Friday') FROM students;
+
+-- 18. PL/SQL Program with Exception Handling
+DECLARE
+    student_name VARCHAR2(50);
+    student_marks NUMBER;
+BEGIN
+    SELECT name, marks INTO student_name, student_marks FROM students WHERE marks >= 60;
+    DBMS_OUTPUT.PUT_LINE('First Class Student: ' || student_name || ' - Marks: ' || student_marks);
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No records found');
+END;
+/
+
+-- 19. COMMIT, ROLLBACK, SAVEPOINT
+BEGIN
+    INSERT INTO students (id, name, marks) VALUES (101, 'John', 85);
+    SAVEPOINT save1;
+    UPDATE students SET marks = 90 WHERE id = 101;
+    ROLLBACK TO save1;
+    COMMIT;
+END;
+/
+
+-- 20. IF-ELSIF-ELSE & CASE Statements
+-- a. IF-ELSIF-ELSE
+DECLARE
+    grade CHAR(1);
+BEGIN
+    SELECT CASE 
+        WHEN marks >= 90 THEN 'A'
+        WHEN marks >= 75 THEN 'B'
+        ELSE 'C' END INTO grade FROM students;
+    DBMS_OUTPUT.PUT_LINE('Grade: ' || grade);
+END;
+/
+
+-- 21. Loops
+-- a. Simple Loop from A to B
+DECLARE
+    i NUMBER := 1;
+BEGIN
+    LOOP
+        EXIT WHEN i > 10;
+        DBMS_OUTPUT.PUT_LINE(i);
+        i := i + 1;
+    END LOOP;
+END;
+/
+
+-- b. While Loop for Factors
+DECLARE
+    num NUMBER := 12;
+    i NUMBER := 1;
+BEGIN
+    WHILE i <= num LOOP
+        IF MOD(num, i) = 0 THEN
+            DBMS_OUTPUT.PUT_LINE(i);
+        END IF;
+        i := i + 1;
+    END LOOP;
+END;
+/
+
+-- 22. More Loops
+-- a. Sum of first N natural numbers
+DECLARE
+    sum NUMBER := 0;
+    i NUMBER := 1;
+BEGIN
+    LOOP
+        sum := sum + i;
+        EXIT WHEN i = 10;
+        i := i + 1;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('Sum: ' || sum);
+END;
+/
+
+-- b. Prime Number Check
+DECLARE
+    num NUMBER := 17;
+    i NUMBER;
+    flag BOOLEAN := TRUE;
+BEGIN
+    FOR i IN 2 .. num/2 LOOP
+        IF MOD(num, i) = 0 THEN
+            flag := FALSE;
+            EXIT;
+        END IF;
+    END LOOP;
+    IF flag THEN
+        DBMS_OUTPUT.PUT_LINE(num || ' is Prime');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(num || ' is Not Prime');
+    END IF;
+END;
+/

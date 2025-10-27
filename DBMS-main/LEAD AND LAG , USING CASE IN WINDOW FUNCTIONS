@@ -1,0 +1,16 @@
+--LEAD()
+--can be used to get the data from one of the previous columns for a current row
+--current row
+--Syntax LEAD(col,offset,default) OVER()
+
+
+--LAG()
+--Can beused to get the data from one of the for a 
+--current row
+--Syntax LAG(col,offset,)
+
+--We can write cases inside the sum and count an other window functions
+
+-- SELECT SUM(CASE gender  ='Female' THEN SLAARY ELSE 0 END) FROM employee
+
+--SELECT SUM(CASE WHEN age = 30 THEN SALARY WHEN age = 32 -SALARY ELSE 0) FROm employee;

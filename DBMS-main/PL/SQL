@@ -1,0 +1,833 @@
+-- PL/SQL introduction 
+--SQL -->Declaratrion
+--In declarative lnguage we  focus more
+--on what to get rather than how to get it
+--base they call it PL/SQL
+-- PL->procedural language
+-- Declaratrion , assignment ,conditional loops
+-- functions
+--PL/SQL structure
+--DECLARE(optional)
+-- BEGIN()
+--EXCEPT
+
+SET SERVEROUTPUT ON;
+
+--Pl/SQL program to print hello world
+-- printf(),print,System.out.println
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello World');
+    DBMS_OUTPUT.PUT_LINE('Hi I am jarvis at your service');
+END;
+/
+
+--Declaring variables in PL/SQL
+
+DECLARE 
+-- variable name -- data type
+num INT;
+name VARCHAR(10);
+BEGIN 
+    --Assignment operatior is := 
+    num := 10;
+    name:= 'Akshaya';
+    DBMS_OUTPUT.PUT_LINE('number is: ' || num);
+   DBMS_OUTPUT.PUT_LINE('name is: ' || name); 
+END;
+/
+
+DECLARE 
+-- variable name -- data type
+num INT;
+name VARCHAR(10);
+BEGIN 
+    --Assignment operatior is := 
+    num := &num;
+    name:= '&name';
+    DBMS_OUTPUT.PUT_LINE('number is: ' || num);
+   DBMS_OUTPUT.PUT_LINE('name is: ' || name); 
+END;
+/
+
+--Write a PL/SQL code to find out Area and perimeter of a square
+
+DECLARE 
+ side INT;
+ area INT;
+ perimeter INT;
+ BEGIN
+    side := &side;
+    area := side * side;
+    perimeter := 4*side;
+    DBMS_OUTPUT.PUT_LINE('AREA :' || area);
+    DBMS_OUTPUT.PUT_LINE('PERIMETER :' || perimeter);
+END;
+/
+
+--PL/SQL can interact with the sql commmads seamlessly
+-- too
+--Age calculator
+DECLARE
+   dob DATE;
+   age INT;
+BEGIN
+    dob := TO_DATE('&dob','DDD-MM-YYYY');
+    age := TO_CHAR(SYSDATE) - dob;
+    DBMS_OUTPUT.PUT_LINE('your age is: '|| age);
+END;
+/
+
+--CONDITIONAL STATAEMNETS
+--DECISION MAKING
+--IF THEN (Simple IF)
+--IF condition THEN code END IF;
+
+DECLARE 
+   age INT := 17;
+BEGIN 
+    IF age  >= 18 THEN 
+    DBMS_OUTPUT.PUT_LINE('YOU CAN VOTE');
+    ELSE
+     DBMS_OUTPUT.PUT_LINE('YOU CANNOT VOTE');
+    END IF;
+END;
+/
+
+--write a program to find a number is even or odd
+DECLARE
+ numn INT;
+BEGIN
+    numn := &numn;
+    IF MOD(numn,2) = 0 THEN 
+    DBMS_OUTPUT.PUT_LINE('EVEN');
+    ELSE 
+    DBMS_OUTPUT.PUT_LINE('ODD');
+    END IF;
+    END;
+/
+
+DECLARE 
+a INT;
+b INT;
+c INT;
+maxi INT;
+BEGIN
+    a := &a;
+    b := &b;
+    c :=  &c;
+    
+    IF a > b THEN
+    IF a > c THEN 
+    maxi := a;
+    ELSE maxi := c;
+    END IF;
+    ELSE 
+    IF b > c THEN
+    maxi := b;
+    ELSE
+    maxi := c;
+    END IF;
+    END IF;
+    DBMS_OUTPUT.PUT_LINE(maxi || ' is greater');
+END;
+/
+
+DECLARE 
+a INT;
+b INT;
+c INT;
+maxi INT;
+BEGIN
+    a := &a;
+    b := &b;
+    c :=  &c;
+    IF a > b AND a < c THEN 
+    maxi := a;
+    ELSIF b > a AND b > c THEN 
+    maxi := b;
+    ELSE
+    maxi := c;
+    END IF;
+    DBMS_OUTPUT.PUT_LINE(maxi || ' is greater');
+END;
+
+--IF_THEN_ELSE
+--IF_THEN_ELSEIF-THEN-ELSE
+--CASE(SIMPLE CASE)
+--CASE(seached CASE)
+
+--LOOPS
+-- Iterative statements(Loops)
+--WHILE
+--USED FOR CINDITION BASED LOOPING
+
+-- WHILE condition LOOP
+-- code
+-- END LOOP
+
+DECLARE 
+i INT  := 10;
+BEGIN
+  WHILE i > 0 LOOP
+  DBMS_OUTPUT.PUT_LINE(i);
+  i :=i - 1;
+  END LOOP;
+END;
+/
+
+DECLARE 
+i INT := 0;
+n INT;
+BEGIN 
+    n := &n;
+    WHILE(i <= n) LOOP
+    IF MOD(n,i) = 0 THEN
+    DBMS_OUTPUT.PUT_LINE(i || ' ');
+    END IF;
+    i := i + 1;
+    END LOOP;
+END;
+/
+
+DECLARE 
+i INT := 0;
+n INT;
+county INT := 0;
+BEGIN 
+    n := &n;
+    WHILE(i <= n) LOOP
+    IF MOD(n,i) = 0 THEN
+    county := county +1;
+    END IF;
+    i := i + 1;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('The number of factors on n are :' || county);
+END;
+/
+
+DECLARE 
+        n INT;
+        i INT := 0;
+        flag INT := 1;
+BEGIN 
+    n := &n;
+    i:=2;
+    WHILE(i *i < n) LOOP
+    IF n%i = 0 THEN
+    flag := 0;
+    BREAK;
+    END IF;
+    END LOOP;
+
+    IF flag = 1 THEN 
+    DBMS_OUTPUT.PUT_LINE(n || 'is a prime number');
+    END IF;
+    END;
+    /
+--FOR(slightlydifferent ffrom the other loops)
+--Range based looping
+DECLARE
+--DBMS OUTPUT.PUT()
+--buffer: hello world my name is akshaya
+BEGIN
+    DBMS_OUTPUT.PUT('hello world ');
+    DBMS_OUTPUT.PUT('my name ');
+    DBMS_OUTPUT.PUT('is ');
+    DBMS_OUTPUT.PUT('akshaya ');
+    DBMS_OUTPUT.NEW_LINE();
+    END;
+/
+--FOR LOOP
+--FOR loop_var IN START..STOP Loop
+--code
+--END LOOP;
+--For loop code to print 1-10
+BEGIN
+    FOR i IN 1..10 LOOP
+    DBMS_OUTPUT.PUT_LINE('Number is:' || i);
+    END LOOP;
+END;
+/
+
+BEGIN
+    FOR i IN 1..10 LOOP
+    FOR i IN 1..5 LOOP
+    DBMS_OUTPUT.PUT('*');
+    END LOOP;
+    DBMS_OUTPUT.NEW_LINE();
+    END LOOP;
+END;
+/
+
+BEGIN
+    FOR i IN REVERSE 1..5 LOOP
+        DBMS_OUTPUT.PUT_LINE('*');
+        END LOOP;
+END;
+
+-- BREAK AND CONTINUE
+--BREAK -> EXIT
+--CONTINUE -> CONTINUE
+
+BEGIN
+   FOR i IN 1..10 LOOP
+      IF i = 5 THEN
+        EXIT;
+      END IF;
+      IF MOD(i, 2) = 0 THEN
+         CONTINUE;
+      END IF;
+      DBMS_OUTPUT.PUT_LINE(i);
+    END LOOP;
+END;
+/
+-- -WHILE ,FOR
+--BASIC LOOP 
+--LOOP
+--CODE
+--RUNS INFINITE TIMES UNLESS A SPECIFIC CONDITION IS MET
+--EXIT WHEN
+--USING BASIC LOOP TO PRINT NUMBERS FROM 1 TO 10
+DECLARE 
+i INT := 1;
+BEGIN 
+    LOOP
+    -- CODE
+    DBMS_OUTPUT.PUT_LINE('Number is : ' || i);
+    i := i+1;
+    EXIT WHEN i = 11;
+    END LOOP;
+END;
+/
+
+-- CASE (SIMPLE CASE)
+DECLARE 
+day INT := 1;
+BEGIN
+    CASE day
+        WHEN 1 THEN DBMS_OUTPUT.PUT_LINE('MONDAY');
+        WHEN 2 THEN DBMS_OUTPUT.PUT_LINE('TUESDAY');
+        WHEN 3 THEN DBMS_OUTPUT.PUT_LINE('WEDNESDAY');
+        WHEN 4 THEN DBMS_OUTPUT.PUT_LINE('THURSDAY');
+        WHEN 5 THEN DBMS_OUTPUT.PUT_LINE('FRIDAY');
+        WHEN 6 THEN DBMS_OUTPUT.PUT_LINE('SATURDAY');
+    END CASE;
+END;
+/
+
+DECLARE 
+day INT := 50000;
+BEGIN
+    CASE day
+        WHEN 1 THEN DBMS_OUTPUT.PUT_LINE('MONDAY');
+        WHEN 2 THEN DBMS_OUTPUT.PUT_LINE('TUESDAY');
+        WHEN 3 THEN DBMS_OUTPUT.PUT_LINE('WEDNESDAY');
+        WHEN 4 THEN DBMS_OUTPUT.PUT_LINE('THURSDAY');
+        WHEN 5 THEN DBMS_OUTPUT.PUT_LINE('FRIDAY');
+        WHEN 6 THEN DBMS_OUTPUT.PUT_LINE('SATURDAY');
+    END CASE;
+END;
+/
+-- Creating userdefined functions in PL/SAQL
+--A function in PL/SQL should always have a return type
+--A function can be called in any DML command in PL/Sql
+--a FUNCTION ITSELF CAN  HAVE A SELECT STATEMENT INSIDE IT
+-- BUT THOSE FUNCTIONS CANNOT BE CALLED IN THE SELECT FUNCTION
+--Instead you need to write another PL/SQL block to call
+-- that funntions
+--SYNATX
+-- CREATE [OR REPLACE] FUNCTION function_name (parameter_list)
+-- RETURN datatype IS|AS
+-- --DEclaring variables in the function
+-- BEGIN 
+--     --Executable code
+--     -- RETURN STATEMENT
+-- END;
+
+-- A function ti add two intwegers and  returns their sum
+CREATE OR REPLACE FUNCTION add_two(a INT,b INT) RETURN INT IS
+sum_ INT ; -- Declaration
+BEGIN 
+    sum_ := a+b;
+    RETURN sum_;
+END;
+/
+--Calling a fucntion
+--Calling WITH a SELECT statement
+ SELECT add_two(10,20) FROM dual;
+ --Second way is using another PL/SQL BLOCK
+ -- that triggers the function
+--  DECLARE
+--   res INT;
+--   BEGIN res := add_two(10,20);
+--   DBMS_OUTPUT.PUT_LINE(res);
+-- END;
+-- / 
+
+
+--write a functio that takes an integer anreturns its square
+CREATE OR REPLACE FUNCTION SQUARE(a INT) RETURN INT IS
+BEGIN
+    RETURN a*a;
+END;
+/
+
+SELECT SQUARE(5) FROM dual;
+/
+
+
+--TASK-2
+CREATE OR REPLACE FUNCTION  IS_FACTOR(a INT ,b INT) RETURN INT IS
+flag INT := 0;
+BEGIN
+    IF MOD(b,a) = 0 THEN
+    flag := 1;
+    END IF;
+
+    RETURN flag;
+END;
+/
+
+SELECT IS_FACTOR(10,20) FROM dual;
+/
+
+--task-3
+CREATE OR REPLACE FUNCTION MAXI(a INT ,b INT,c INT) RETURN INT IS
+BEGIN
+    IF a > b AND a > c THEN 
+    RETURN a;
+    ELSIF b > c AND b > a THEN
+    RETURN b;
+    ELSE
+    RETURN c;
+    END IF;
+END;
+/
+
+SELECT MAXI(10,20,30) FROM dual;
+
+--task-4
+CREATE OR REPLACE FUNCTION FUN(name VARCHAR,gender VARCHAR) RETURN VARCHAR IS
+BEGIN
+    RETURN name || '(' || SUBSTR(gender,1,1) || ')';
+END;
+/
+SELECT FUN('AKSHAYA','FEMALE') FROM dual;
+
+--task-5
+CREATE OR REPLACE FUNCTION FUN2(name VARCHAR) RETURN VARCHAR IS
+BEGIN
+    RETURN SUBSTR(name,1,1) || SUBSTR(name,-1,1);
+END;
+/
+SELECT FUN2('AKSHAYA') FROM dual;
+
+--task-6
+CREATE OR REPLACE FUNCTION age(dob DATE) RETURN INT IS
+BEGIN
+    RETURN TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(dob,'YYYY') ;
+END;
+/
+SELECT age('1-01-2006') FROM dual; 
+
+--task-7
+
+CREATE OR REPLACE FUNCTION age(dob DATE) RETURN INT IS
+BEGIN
+    RETURN TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(dob,'YYYY') ;
+END;
+/
+SELECT age('1-01-2006') FROM dual; 
+
+
+--task-8
+CREATE OR REPLACE FUNCTION salary_rank(salary INT) RETURN VARCHAR IS
+BEGIN
+    CASE
+        WHEN salary > 80000 THEN RETURN 'High Paid'
+        WHEN salary >= 50000 AND salary <= 80000 'Medium Paid'
+        WHEN salary < 50000 'Low Paid'
+        END CASE;
+END;
+/
+
+--task -10
+CREATE OR REPLACE FUNCTION get_bonus(salary INT,department VARCHAR) RETURN INT IS
+BEGIN
+    CASE
+        WHEN department = 'HR' THEN RETURN salary * 0.12;
+        WHEN department = 'Operations' THEN RETURN salary * 0.10;
+        WHEN department = 'SW' THEN RETURN salary * 0.15;
+        WHEN department = 'Testing' THEN RETURN salary * 0.08;
+        WHEN department = 'None' THEN RETURN salary * 0.05;
+        END CASE;
+END;
+/
+
+--task ->emoloyee table
+-- department of the employee is being maitained
+--salary is also maintained
+--total salary if employees from hr departent
+--now from operstions department too
+
+
+CREATE OR REPLACE FUNCTION get_dept_salary(dept_name VARCHAR) RETURN INT IS
+sum_ INT ;
+BEGIN
+SELECT SUM(salary) INTO sum_ FROM employee WHERE department = dept_name;
+RETURN sum_;
+END;
+
+DECLARE
+res_ INT; 
+BEGIN
+    res_ := get_dept_salary('HR')
+    DBMS_OUTPUT.PUT_LINE('the salary of the department is' || res_);
+END;
+/
+
+-- SELECT id,name,salary,department,date_of_joining,get_bonus(salary,department)
+-- /
+
+--Procedures (Void function)
+-->stored procedures
+-->procedures does'nt return any value
+--> procedures are primarily used to minmimize the time we use for perform the insert and delete and update operations
+--> on table
+
+--procedures are of two types 
+--1) procedures with parameterss
+--2) prodcedures without any return type
+
+--There are three different types of parameters
+--we can use inprocedures
+--1)IN parameters(Inputs)
+--2)OUT parameters(Outputs)
+--3)INOUT parameters (Can perform both input an output)
+
+-->SYNTAX OF CREATING A PROCEDURE
+-- CREATE OR REPLACE PROCEDURE pro_name[(parameterlist)] IS | AS
+--declare variables
+-- BEGIN
+    --code
+-- END;
+
+--A simple procedure that prints hello on to the screen
+CREATE OR REPLACE PROCEDURE say_hello IS
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello....');
+END;
+/
+--->Procedures cannot be called in the sql functions
+--1)calling the procedure using a EXEC keyword
+EXEC say_hello();
+-- 2)calling th eprocedure directly using PL/SQL block
+BEGIN
+say_hello();
+END;
+/
+
+--Procedure that prints numbers from 1-n
+
+CREATE OR REPLACE PROCEDURE print_nums(n INT) IS
+BEGIN
+    FOR i IN 1..n LOOP
+    DBMS_OUTPUT.PUT_LINE(I);
+    END LOOP;
+END;
+/
+
+EXEC print_nums(25);
+/
+
+CREATE OR REPLACE PROCEDURE upd_sal(emp_id INT,new_sal INT) IS
+BEGIN
+    UPDATE employee SET salary = new_sal WHERE id = emp_id;
+END;
+/
+
+EXEC upd_sal(15,95000);
+
+SELECT salary FROM employee WHERE id = 15;
+--Triggers too 
+
+--task-1
+CREATE OR REPLACE PROCEDURE print_1(N INT) IS
+BEGIN
+    FOR i IN REVERSE 1..N LOOP
+    DBMS_OUTPUT.PUT_LINE(i);
+    END LOOP;
+END;
+/
+
+EXEC print_1(14);
+
+--TASK-2
+CREATE OR REPLACE PROCEDURE ranger(a INT ,b INT) IS
+BEGIN
+    FOR i IN a..b LOOP
+    DBMS_OUTPUT.PUT_LINE(i);
+    END LOOP;
+END;
+/
+
+EXEC ranger(20,35);
+
+--Task-3
+
+CREATE OR REPLACE FUNCTION get_factor_count(a INT) RETURN INT IS
+county INT := 0;
+BEGIN
+    FOR i IN 1..SQRT(a) LOOP
+    IF MOD(a,i) = 0 THEN 
+    county := county+1;
+    END IF;
+    END LOOP;
+    RETURN county;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE range_factor_count(a INT,b INT) IS
+BEGIN
+    FOR i IN a..b LOOP
+    DBMS_OUTPUT.PUT_LINE('the number of factors of ' || i || ' are: ' || get_factor_count(i));
+    END LOOP;
+END;
+/
+
+EXEC range_factor_count(5,16);
+
+--task-4
+CREATE OR REPLACE FUNCTION is_prime(a INT) RETURN INT IS
+county INT := 0;
+BEGIN
+    FOR i IN 1..a LOOP
+    IF MOD(a,i) = 0 THEN 
+    county := county+1;
+    END IF;
+    END LOOP;
+    IF county = 2 THEN
+    RETURN 1;
+    ELSE
+    RETURN 0;
+    END IF;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE get_prime_numbers(a INT,b INT) IS
+BEGIN
+    FOR i IN a..b LOOP
+    IF (is_prime(i)=1) THEN
+    DBMS_OUTPUT.PUT_LINE(i);
+    END IF;
+    END LOOP;
+END;
+/
+
+EXEC get_prime_numbers(2,15);
+
+--Task-5
+CREATE OR REPLACE PROCEDURE UPDATION(emp_id INT , new_salary INT) IS
+BEGIN
+    UPDATE employee SET salary = new_salary WHERE id = emp_id;
+END;
+/
+
+EXEC UPDATION(13,30000);
+SELECT *FROM employee WHERE id = 13;
+
+--Triggerrs
+--trigger is nothing but a stored procedured
+--Triggers can come into life upon different events automatically
+--Events ->INSERT | UPDATE |DELETE
+--3 different types of triggers
+--1)Before Trigegr
+--2)After
+--3)Instead OF
+
+--uses 
+--comput some values before performing 
+--logging in
+--validity data and ensuring checks
+CREATE TABLE employee1(
+    id INT ,
+    name VARCHAR(50),
+    dob DATE,
+    age INT,
+    salary INT
+);
+
+DROP TABLE employee1;
+
+--a trigger that calculates the age 
+--puts it in the table upon insert
+
+-- CREATE OR REPLACE TRIGGER trg_calc_age
+-- BEFORE INSERT OR UPDATE ON employee1 --if we chnage the dob the age in the resulting table will not chnage to avoid this we write insert or update so that when ever we upadte the dob ,everytime the age also updates(i.e) the trigger gets triggered before the update too
+-- FOR EACH ROW
+-- BEGIN
+--     --Pseudo record for newly inserted the data
+--     :NEW.age := FLOOR(MONTHS_BETWEEN(SYSDATE,:NEW.dob)/12);
+-- END;
+-- /
+
+-- CREATE OR REPLACE TRIGGER trg_calc_age
+-- BEFORE INSERT ON employee1
+-- FOR EACH ROW
+-- BEGIN
+--     :NEW.age = FLOOR(MONTHS_BETWEEN(SYSDATE,:NEW.dob))
+--     /
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2006','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshitha',TO_DATE('28-01-2006','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2019','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2020','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-20021','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2022','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2023','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2025','DD-MM-YYYY'),140000);
+
+INSERT INTO employee1(id,name,dob,salary)
+VALUES(1,'akshara',TO_DATE('28-03-2024','DD-MM-YYYY'),140000);
+/
+-- UPDATE employee1 SET dob = '11-03-1987';
+/
+SELECT *FROM employee1
+/
+--Statement level triggers
+--executes once per statement
+--2)row level triggers
+-- executes once a ow
+
+-- 1)Before
+--
+
+--CREATE OR REPLACE TRIGGER trigger_name
+--BEFORE |AFTER | INSTEAD OF
+--INSERT | UPDATE | DELETE
+--ON table_name
+-- [FOR EACH ROW]->For only Row level triggers
+-- BEGIN 
+
+-- END;
+/
+
+DROP TABLE STUDENT;
+CREATE TABLE STUDENT (
+    id INT ,
+    name VARCHAR(50),
+    date_of_join DATE ,
+    total_fee INT,
+    ss_fee INT
+);
+
+CREATE OR REPLACE TRIGGER trig_calc_ss_fee
+BEFORE INSERT ON STUDENT
+FOR EACH ROW
+BEGIN 
+   :NEW.ss_fee := (0.1 * (:NEW.total_fee)); 
+END;
+/
+
+INSERT INTO STUDENT(id,name,date_of_join,total_fee) VALUES(1,'AKSHAYA','29-03-2024',12680);
+
+SELECT * FROM STUDENT;
+
+CREATE TABLE salary_log(
+    id INT GENERATED AS IDENTITY,
+    emp_id INT,
+    old_salary INT,
+    new_salary INT,
+    updated_on TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+
+DROP TABLE salary_log;
+CREATE OR REPLACE TRIGGER chn_emp_salary
+AFTER UPDATE OF salary ON employee1
+FOR EACH ROW
+BEGIN
+  INSERT INTO salary_log(emp_id,old) VALUES(:NEW.id,:OLD.salary,:NEW.salary);
+END;
+/
+
+-- 
+UPDATE employee1 SET salary = 120000
+WHERE dob = '28-03-2022';
+
+SELECT * FROM salary_log;
+
+
+DECLARE 
+    CURSOR emp_cursor IS
+    SELECT id,name FROM employee1;
+    v_id INT;
+    V_name VARCHAR(50);
+BEGIN
+    OPEN emp_cursor;
+    LOOP
+        FETCH emp_cursor INTO v_id,v_name;
+        DBMS_OUTPUT.PUT_LINE('ID :' || v_id);
+        DBMS_OUTPUT.PUT_LINE('Name :' ||  v_name);
+
+        EXIT WHEN emp_cursor%NOTFOUND;
+        END LOOP;
+    CLOSE emp_cursor;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE print_data(dept1 VARCHAR) IS
+CURSOR emp_cursor INTO id,name,salary,department
+SELECT id,name,salary,departent FROM employee
+WHERE department = dept1;
+v_id employee1.id%TYPE;
+v_name employee.name%TYPE;
+v_sal employee.salary%TYPE;
+v_dept employee.department%TYPE;
+BEGIN
+    OPEN emp_cursor;
+    LOOP
+        FETCH emp_cursor INTO v_id,v_name,v_sal,v_dept;
+         DBMS_OUTPUT.PUT_LINE('ID :' || v_id);
+        DBMS_OUTPUT.PUT_LINE('Name :' ||  v_name);
+         DBMS_OUTPUT.PUT_LINE('salary :' || v_sal);
+        DBMS_OUTPUT.PUT_LINE('department :' ||  v_dept);
+        EXIT WHEN emp_cursor%NOTFOUND;
+        END LOOP;
+    CLOSE emp_cursor;
+END;
+/
+
+
+--FOR LOOP CURSOR
+SET SERVEROUTPUT ON;
+
+
+BEGIN
+FOR rec IN (SELECT id,name,salary,department FROM employee)
+LOOP
+    DBMS_OUTPUT.PUT_LINE('id : ' || rec.id);
+    DBMS_OUTPUT.PUT_LINE('name :' || rec.name);
+    DBMS_OUTPUT.PUT_LINE('salary :' || rec.salary);
+    DBMS_OUTPUT.PUT_LINE('department :' || rec.department);
+END LOOP;
+END ;
+/
+
+DROP TABLE employee1;
+SELECT *FROM employee1;
+DROP TABLE employee;
+

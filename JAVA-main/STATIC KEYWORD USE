@@ -1,0 +1,36 @@
+import java.util.Scanner;
+ public class StaticKeyword_use {
+    static int noOfInstances;  // Static variable to count instances
+    String name;
+    int age;
+
+     StaticKeyword_use(String name, int age) {
+        this.name = name;
+        this.age = age;
+        noOfInstances++;  // Increment number of instances for each object created
+    }
+
+    static void print() {
+        // Static methods cannot access instance variables directly
+        System.out.println("Number of Instances: " + noOfInstances);
+    }
+}
+
+class Akshu {
+    public static void main(String args[]) {
+        StaticKeyword_use s1 = new StaticKeyword_use("asdf", 23);  // Creating first instance
+        StaticKeyword_use s2 = new  StaticKeyword_use("qwer", 25);  // Creating second instance
+
+        // Static method can be called using class name (recommended)
+        StaticKeyword_use.print();  // Output: Number of Instances: 2
+
+        // Static method can also be called using an instance (though not recommended)
+        StaticKeyword_use.print();  // Output: Number of Instances: 2
+
+        // Accessing static variable using class name (recommended)
+        System.out.println( StaticKeyword_use.noOfInstances);  // Output: 2
+
+        // Static variable can also be accessed using an instance (though not recommended)
+        System.out.println(StaticKeyword_use.noOfInstances);  // Output: 2
+    }
+}

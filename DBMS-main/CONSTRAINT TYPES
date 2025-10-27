@@ -1,0 +1,110 @@
+/*Constraints
+1. NOT NULL
+2.UNIQUE
+3.CHECK
+4.PRIMARY KEY
+5. FOREIGN KEY
+->ANY COLUMN SET TO NOT NULL CANNOT BE EMPTY
+->DURING iNSERT OPERATION YOU MUST PROVIDE THE DATA FOR THAT COLUMN
+*/
+--CREATE TABLE user(
+-- id int, 
+-- name varchar(50 NOT NULL--enforces the data entry
+-- );
+-- INSERT INTO user VALUES(1,'akshaya');--works
+-- INSERT INTO user VALUES(2);--error since name shouldn't be null
+-- SELECT * FROM user;
+-- DESC user;
+-- 
+ --DROP TABLE users;
+ ------------------------------------------------------------
+ /*UNIQUE
+ ->UNIQUE DOESN'T LET YOU STORE A SAME VALUE UNDER THE SINGLE COLUMN TWICE
+ */
+-- create table customers(
+-- id int,
+-- name varchar(50) NOT NULL,
+-- email varchar(50)NOT NULL UNIQUE
+-- );
+-- INSERT INTO customers values(1,'alice','alice@gmail.com');
+-- INSERT INTO customers values(2,'bob','alice@gmail.com');
+-- SELECT * FROM customers;
+-- 
+-- DROP TABLE customers;
+------------------------------------------------------------------------------
+/*CHECK
+->it will check if the given data with specifiedc ondition
+--and only let's you proceed if the data obey the condition
+--during INSERT and UPDATE operations*/
+--CREATE TABLE students(
+--roll_no INT,
+--name VARCHAR(50),
+--age INT CHECK(age > 17 AND age < 30)
+--);
+--INSERT INTO students VALUES(2,'bob',25);--works
+----INSERT INTO students VALUES(1,'alice',-7);--fails
+----INSERT INTO students VALUES(3,'charlie',117);--fails
+--SELECT *FROM students;
+-----------------------------------------------------------------------------
+/*DEFAULT -> DEFAULT is not a constraint 
+->but still ensures the dta =a integrity by filling  rows with DEFAULT value 
+provided*/
+--
+----------------------------------------------------------------------------
+/*PRIMARY KEY
+-> PRIMARY KEY IS SOMETHING THAT UNIQUELY IDENTIFIES THE ENTIRE RECORD
+->MOSTLY PRIMARY KEYS ARE IDS BECAUSE THEY WILL BE UNIQUE
+->ONLY ONE COLUMN IN THE TABLE CAN BE PRIMARY KEY
+-PRIMARY KEY IS BY DEFAULT ->NOT NULL AND UNIQUE,
+*/
+------------------------------------------------------------------------------
+/*FOREIGN KEY
+->IN-LINE FOREIGN KEY
+->OUT-OF-LINE FOREIN KEY
+->A COLUMN THAT IS BEING REFRENCED IN ANOTHER TABLE(FOREIGN KEY)
+->MUST BE ATLEAST UNIQUE
+*/
+CREATE TABLE trainers(
+id INT PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+email VARCHAR(50)NOT NULL UNIQUE,
+salary INT NOT NULL
+);
+INSERT INTO trainers
+VALUES(4348,'ALICE','alice@gmail.com',780109943);
+INSERT INTO trainers
+VALUES(224,'BOB','bob@gmail.com',7802345532);
+SELECT *FROM trainers;
+--IN-LINE FOREIGN KEY
+--child_tab_col_name datatype REFRENCES parent_table(col_name)
+--OUT-OF-LINE foreign key
+--FOREIGN KEY(child_table_col_name) REFRENCES parent_table(col_name)
+CREATE TABLE courses(
+id INT PRIMARY KEY,
+name VARCHAR(20) NOT NULL ,
+price INT NOT NULL,
+trainer_id INT REFERENCES trainers(id) -- FOREIGN KEY
+--trainer_id INT
+--FOREIGN KEY (trainer_id) REFRENCES trainers
+);
+INSERT INTO courses VALUES(474,'C LANG',6000,4348);--WORKS
+INSERT INTO courses VALUES(972,'APEX',15000,5174);--FAILS
+------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE participants(
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL ,
+    age INT CHECK(age > 12 AND age  <  30)
+);
+INSERT INTO participants VALUES(1,'AKSHAYA',18);
+INSERT INTO participants VALUES(2,'AKSHARA',27);
+INSERT INTO participants VALUES(3,'AKSHAY',15);
+CREATE TABLE events(
+    stall_no INT PRIMARY KEY,
+    name VARCHAR(50) UNIQUE,
+    price INT DEFAULT 100,
+    participants_id INT REFERENCES participants(id)
+);
+INSERT INTO events VALUES(101,'BALLON SHOOT',50,1);
+INSERT INTO events VALUES(102,'RING GAME',70,2);
+INSERT INTO events VALUES(103,'TREASURE HUNT',1);
+INSERT INTO events VALUES(104,'BALOON GAME',75,2);

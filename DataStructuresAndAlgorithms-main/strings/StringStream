@@ -1,0 +1,90 @@
+✅ How to get each word from a string using stringstream in C++
+
+You want to extract each word from a sentence or a string, and this can be easily done using stringstream from the <sstream> header.
+
+✅ Step-by-step explanation
+
+Include the required header:
+
+#include <sstream>
+
+
+Create a stringstream object and initialize it with the string.
+
+Use >> operator to extract each word.
+
+✅ Example
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string str = "This is a sample string";
+    string word;
+
+    // Create a stringstream object with the input string
+    stringstream ss(str);
+
+    // Extract each word separated by space
+    while(ss >> word) {
+        cout << word << endl;
+    }
+
+    return 0;
+}
+
+✅ Output
+This
+is
+a
+sample
+string
+
+✅ Explanation
+
+stringstream ss(str); initializes ss with the content of str.
+
+The while(ss >> word) loop reads one word at a time and stores it in word.
+
+It stops when there are no more words left.
+
+✅ Important notes
+
+✔ By default, stringstream splits the input at spaces (whitespace characters).
+✔ It skips multiple spaces automatically.
+✔ You can use getline() with stringstream if you want to split by a different character like a comma.
+
+✅ Example using a different delimiter
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string str = "apple,banana,cherry,dates";
+    string word;
+    stringstream ss(str);
+
+    while(getline(ss, word, ',')) {
+        cout << word << endl;
+    }
+
+    return 0;
+}
+
+✅ Output
+apple
+banana
+cherry
+dates
+
+✅ Summary
+
+Use stringstream to break a string into words easily.
+
+>> operator splits based on spaces.
+
+getline(ss, word, delimiter) splits based on any delimiter.
+
+It's a clean and standard way to process strings word by word.
+
+Let me know if you want examples with other delimiters or variations!

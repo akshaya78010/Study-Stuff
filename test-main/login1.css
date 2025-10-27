@@ -1,0 +1,149 @@
+body {
+  /* background: url("crystal.jpeg");
+  background-size: cover; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100svh; */
+}
+.form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  border : 2px solid black;
+  /* transform: translateY(200px); */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.form_parent {
+  width : 700px;
+  height : 700px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form h1 {
+  transform: translateX(170px);
+}
+
+input {
+  /* width : 20px; */
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+input:focus {
+  border: 2px solid black;
+}
+
+.button button {
+  width: 500px;
+  padding: 12px;
+  margin-top: 5px;
+  color: white;
+  background-color: rgb(255, 4, 125);
+  border: 2px solid white;
+  border-radius: 5px;
+  /* transform: translateX(200px); */
+}
+
+.button button:hover {
+  transform: translateY(1px);
+}
+
+.button button:active {
+  box-shadow: 0px 0px 3px 1px rgb(206, 206, 206);
+}
+
+/*
+.button button:hover {
+  background-color: rgb(222, 111, 20);
+}
+.checkbox_region {
+  display: flex;
+  justify-content: space-between;
+} */
+
+.button button:active {
+  background-color: rgb(255, 4, 125);
+  border-color: white;
+}
+.checkbox_region {
+  display: flex;
+  justify-content: space-between;
+}
+
+.email_container {
+  display: flex;
+  flex-direction: column;
+}
+.password_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.password_container button,
+.confirm_password_container button {
+  position: absolute;
+  left: 460px;
+  top: 10px;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  border: 0px solid white;
+  background-repeat: no-repeat;
+}
+
+.confirm_password_container {
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+}
+
+.other_login_options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  /* justify-content: center; */
+  align-items: center;
+  color: rgb(146, 144, 144);
+}
+
+.signin_accounts {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.signin_accounts img {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgb(228, 225, 225);
+  border-radius: 4px;
+}
+
+.signin_accounts img:hover {
+  width: 32px;
+  height: 32px;
+}
+
+.signin_accounts img:active {
+  box-shadow: 0px 0px 1px 1px rgb(206, 206, 206);
+}
+
+/* @media (max-width: 600px) {
+  .form_parent{
+    width : 300px;
+    height : 600px;
+  }
+  .form{
+    width : 300px;
+    height
+  }
+} */

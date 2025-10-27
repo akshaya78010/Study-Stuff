@@ -1,0 +1,29 @@
+const student = { 
+    fullname : "Majji Sri Laxmi Syamala Akshaya",
+    age : 19,
+    cgpa : 9,
+    ispass:true
+}
+student["age"] = student["age"]+1;
+console.log(student["age"]);
+// changing constant object's keys can be changed
+
+//prac question -1
+ const product = {
+    productname : "Parker Jotter Standard CT Ball Pen(Black)",
+    starrating : 4,
+    no_of_people_given_rating : 7002,
+    is_in_deal : true,
+    product_price : 270,
+    original_price :285,
+    discount_percentage:5
+}
+
+//prac qustion 2
+const profile = {
+    profile_name : "Shraddha kapra",
+    is_following : true,
+    no_of_posts : 195,
+    no_of_followers : 569000,
+    no_of_following : 4
+}

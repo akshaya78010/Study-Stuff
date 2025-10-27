@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="openr()">open</button>
+    <div class="menu-options">
+        <span onclick="closer()">&times</span>
+        <div>home</div>
+        <div>about</div>
+        <div>random</div>
+        <div>contact US</div>
+    </div>
+
+    <script>
+        function closer() {
+            document.getElementsByClassName("menu-options")[0].style = "left : -200px;";
+        }
+        function openr() {
+            document.getElementsByClassName("menu-options")[0].style = "left : 0px;";
+        }
+
+    </script>
+</body>
+
+</html>

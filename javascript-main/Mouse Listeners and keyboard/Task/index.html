@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <script>
+        var arr = new Array();
+        function fun(event, info) {
+            arr.push(info + ":" + event.target.value);
+        }
+
+        function display(event) {
+            event.preventDefault();
+
+            console.log(event);
+            arr.clear;
+        }
+    </script>
+</head>
+
+<body>
+    <form onsubmit=display(event)>
+        <label>Full Name:</label>
+        <input type="text" placeholder="Enter your name" onblur="fun(event,'Name')">
+
+        <label>Gender</label>
+        <label>Male</label>
+        <input type="radio" name="gender" onchange="fun(event,'Gender:Male')">
+        <label>Female</label>
+        <input type="radio" name="gender" onchange="fun(event,'Gender:FeMale')">
+        <label>Others</label>
+        <input type="radio" name="gender" onchange="fun(event,'Gender:Others')">
+        <label>Roll Number:</label>
+
+        <input type="text" placeholder="Enter your Roll Number" onblur="fun(event,'RollNumber')">
+
+        <label>Section:</label>
+        <input type="text" placeholder="Enter your Section" onblur="fun(event,'Section')">
+
+        <label>Email:</label>
+        <input type="Email" placeholder="Enter your Email" onblur="fun(event,'Email')">
+
+        <label>Phone Number:</label>
+        <input type="number" placeholder="Enter your Phone Number" onblur="fun(event,'Phone Number')">
+
+        <button type="Submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+
+</html>

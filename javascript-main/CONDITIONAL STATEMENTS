@@ -1,0 +1,34 @@
+let age = 20
+// if(age > 18)
+// {
+//     console.log("you can vote");
+// }
+// else if(age < 18)
+// {
+//     console.log("you cannot vote");
+// }
+
+// //terenary operator
+// age > 18 ? console.log("yes") : console.log("no");
+
+// //mdn ddocs
+// // switch 
+
+// //alert gives a meassage as pop up
+// alert("hello!");
+
+// //prompt gives a message on the pop up and as well as can take an input from the user
+// let name = prompt("enter your name");
+// console.log(name);
+
+//task1 :take an num as inout and check weather a multipe of 5
+let numbers = prompt("enter a number");
+if(numbers %5 == 0)
+{
+    console.log("number is a multiple of 5");
+}
+else{
+    console.log("number isnot a multiple of 5");
+}
+
+

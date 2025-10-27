@@ -1,0 +1,37 @@
+// LOOPS
+// same as the c for  the loops :
+// for 
+// while
+
+// for loop can also be written on the objects like we write loop on map,and other containers
+//lets build a guessing game:
+// let number  = 25;
+// let entered_num = prompt("guess the number");
+// while(entered_num != number)
+// {
+//     entered_num = prompt("you guessed the number wrong ,try guessing it!");
+// }
+// console.log("hooray! , your guess is right");
+
+//STRINGS
+let str = "Apna college";
+let str1 = "Akshaya";
+
+//str.length give sthe length of the string
+console.log(str.length);
+console.log(str1.length);
+
+//we can access strings in the same way in any language 
+// -> we can acees the elemetns at any position on the string str[0],str[1],str[2]
+
+//look at this code
+console.log("str :" ,str,"str2:",str1); //instead of addign commas slowing down your typing speed
+console.log(`str : ${str} str1:  ${str1}`);
+//so the above ${} called as template literal
+//so the above process is called as string interpolation 
+
+//ESCAPE CHARACTERS
+// like \n,\t
+//but if you calculate the length of this string:Akshaya\ngood
+//it is 12 
+//escape characters are calculates as a single character
