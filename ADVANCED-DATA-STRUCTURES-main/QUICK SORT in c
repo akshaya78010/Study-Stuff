@@ -1,0 +1,56 @@
+#include<stdio.h>
+int partition(int *arr,int lb,int up)
+{
+	int pivot = arr[lb];
+	int start = lb;
+	int end = up;
+	while(start < end)
+	{
+		while(arr[start] <= pivot)
+		{
+			start++;
+		}
+		
+		while(arr[end] > pivot)
+		{
+			end--;
+		}
+		if(start < end)
+		{
+			int temp = arr[start];
+			arr[start] = arr[end];
+			arr[end] = temp;
+		}
+	}
+	int t = arr[lb];
+	arr[lb] = arr[end];
+	arr[end] = t;
+	return end;
+}
+void quick(int *arr,int lb,int up)
+{
+ if(lb < up)
+{
+  int loc = partition(arr,lb,up);
+  	quick(arr,lb,loc-1);
+  	quick(arr,loc+1,up);
+}
+}
+int main()
+{
+	int n;
+	scanf("%d",&n);
+	int arr[n];
+	for(int i = 0; i < n ; i++)
+	{
+		scanf("%d",&arr[i]);
+	}
+  quick(arr,0,n-1);
+  for(int i = 0 ; i<n ; i++)
+  {
+  	printf("%d ",arr[i]);
+  }
+}
+
+
+      

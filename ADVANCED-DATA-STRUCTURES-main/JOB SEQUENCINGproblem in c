@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct job{
+    char id;
+    int dead;
+    int profit;
+};
+typedef struct job job;
+int compare(const void *a,const void *b)
+{
+    job *temp1 = (job*)a;
+    job *temp2 = (job*)b;
+    return temp2->profit - temp1->profit;
+}
+int min(int a,int b)
+{
+    return a > b ? a : b; 
+}
+void jobs(job arr[],int n)
+{
+    bool slot[n];
+    for(int i =0; i < n ;i++)
+    {
+        slot[i] = false;
+    }
+    int result[n];
+    qsort(arr,n,sizeof(job),compare);
+    for(int i =0; i < n ; i++)
+    {
+        for(int j = min(n,arr[i].dead) - 1 ; j >= 0 ; j--)
+        {
+            if(slot[j] == false)
+            {
+                result[j] = i;
+                slot[j] = true;
+                break;
+            }
+        }
+    }
+    for(int i =0; i < n ; i++)
+    {
+        if(slot[i])
+        {
+            printf("%c ",arr[result[i]].id);
+        }
+}
+}
+int main()
+{
+    job arr[] = {{'a',2,5},{'b',2,10},{'c',7,4}};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    printf("jobs with max profit\n");
+    jobs(arr,n);
+}

@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdbool.h>
+#define MAX 20
+
+int board[MAX][MAX], n;
+
+void printBoard() {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", board[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+bool isSafe(int row, int col) {
+    for (int i = 0; i < row; i++)
+    {
+        if (board[i][col] || (col - row + i >= 0 && board[i][col - row + i]) || (col + row - i < n && board[i][col + row - i]))
+        {
+            return false;
+        }
+    }  
+    return true;
+}
+
+bool solveNQueens(int row) {
+    if (row == n) {
+        printBoard();
+        return true;
+    }
+    for (int col = 0; col < n; col++) {
+        if (isSafe(row, col)) {
+            board[row][col] = 1;
+            if (solveNQueens(row + 1)) 
+            {
+                return true;
+            }
+             board[row][col] = 0;
+        }
+    }
+    return false;
+}
+
+int main() {
+    printf("Enter the number of queens: ");
+    scanf("%d", &n);
+    if (!solveNQueens(0))
+    {
+         printf("Solution does not exist.\n");
+    }
+    return 0;
+}

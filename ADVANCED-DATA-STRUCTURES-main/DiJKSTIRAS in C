@@ -1,0 +1,60 @@
+#include <stdio.h>
+#define INF 999
+
+void dijkstra(int n, int src, int cost[10][10], int dist[]) {
+    int visited[10] = {0}; // Tracks visited nodes
+    for (int i = 0; i < n; i++) {
+        dist[i] = cost[src][i]; // Initialize distances
+    }
+    visited[src] = 1; // Mark source as visited
+
+    for (int count = 1; count < n; count++) {
+        int min = INF, u = -1;
+
+        // Find the nearest unvisited node
+        for (int i = 0; i < n; i++) {
+            if (!visited[i] && dist[i] < min) {
+                min = dist[i];
+                u = i;
+            }
+        }
+        if (u == -1) break; // No reachable nodes
+        visited[u] = 1;
+
+        // Update distances
+        for (int i = 0; i < n; i++) {
+            if (!visited[i] && dist[u] + cost[u][i] < dist[i]) {
+                dist[i] = dist[u] + cost[u][i];
+            }
+        }
+    }
+}
+
+int main() {
+    int n, src, cost[10][10], dist[10];
+
+    printf("Enter number of nodes:\n");
+    scanf("%d", &n);
+
+    printf("Enter cost matrix (0 for no direct path):\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &cost[i][j]);
+            if (cost[i][j] == 0 && i != j) cost[i][j] = INF; // Set INF for no path
+        }
+    }
+
+    printf("Enter source node:\n");
+    scanf("%d", &src);
+
+    dijkstra(n, src, cost, dist);
+
+    printf("Shortest paths from node %d:\n", src);
+    for (int i = 0; i < n; i++) {
+        if (i != src) {
+            printf("%d -> %d, cost = %d\n", src, i, dist[i]);
+        }
+    }
+
+    return 0;
+}

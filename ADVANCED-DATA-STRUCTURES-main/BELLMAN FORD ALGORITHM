@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> bellmanford(int V,int E,vector<vector<int>>&edges,int source)
+{
+	//step 1
+	vector<int>distance(V+1,INT_MAX);
+    distance[source] = 0;
+//relax all the edges for v-1 times
+for(int i = 0; i < V-1 ; i++)
+{
+  for(auto nbr:edges)
+  {
+  	int u = nbr[0];
+  	int v =nbr[1];
+  	int wt = nbr[2];
+  	if(distance[v] > wt + distance[u])
+  	{
+  		distance[v] = wt + distance[u];
+  	}
+  }
+}
+
+bool flag = true;
+vector<int>neg(1);
+//check for negative cycles
+for(auto nbr:edges)
+{
+	int u = nbr[0];
+	int v = nbr[1];
+	int wt=  nbr[2];
+	if(distance[v] > wt + distance[u])
+	{
+		flag = false;
+		break;
+	}
+}
+if(flag == false)
+{
+	neg.push_back(-1);
+	return neg;
+}
+return distance;
+}
+int main()
+{
+	int V,E;
+	cin>>V>>E;
+	vector<vector<int>>edges;
+	for(int i =0 ; i < E ; i++)
+	{
+		int u,v,wt;
+		cin>>u>>v>>wt;
+      edges.push_back({u,v,wt});
+	}
+	int source;
+	cin>>source;
+	vector<int>ans = bellmanford(V,E,edges,source);
+	for(auto i:ans)
+	{
+		cout<<i<<" ";
+	}
+	//2 4 -6
+}
